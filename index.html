@@ -8,9 +8,14 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#09090b">
   <link rel="canonical" href="https://alphatester.arqilasp.com/">
+  <meta property="og:type" content="website">
   <meta property="og:title" content="Alpha tester · Edunex Plus">
   <meta property="og:description" content="Daftar jadi alpha tester Edunex Plus.">
   <meta property="og:url" content="https://alphatester.arqilasp.com/">
+  <meta property="og:image" content="https://alphatester.arqilasp.com/assets/poster-16x9.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="assets/icon-180.png">
   <style>
@@ -21,31 +26,64 @@
     html { color-scheme: dark; }
     body {
       min-height: 100vh;
+      min-height: 100svh;
       display: grid;
       place-items: center;
-      padding: 32px 24px;
+      padding: 64px 24px;
       background: #09090b;
       color: #fafafa;
       font-family: "DM Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-    main { width: 100%; max-width: 360px; }
+    main {
+      width: 100%;
+      max-width: 1040px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
     img { display: block; width: 40px; height: 40px; }
-    h1 { margin-top: 24px; font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
-    p { margin-top: 8px; color: #a1a1aa; font-size: 15px; line-height: 1.55; }
+    h1 { margin-top: 24px; font-size: 28px; font-weight: 500; letter-spacing: -0.025em; line-height: 1.2; }
+    p { margin-top: 10px; max-width: 360px; color: #a1a1aa; font-size: 16px; line-height: 1.55; }
     a.button {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       margin-top: 28px;
-      padding: 10px 18px;
+      padding: 11px 20px;
       border-radius: 8px;
       background: #fafafa;
       color: #09090b;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
       text-decoration: none;
+      transition: background 0.18s, transform 0.18s;
     }
-    a.button:hover { background: #d4d4d8; }
+    a.button svg { width: 16px; height: 16px; transition: transform 0.18s; }
+    a.button:hover { background: #fff; transform: translateY(-1px); }
+    a.button:hover svg { transform: translateX(2px); }
+    a.button:active { transform: none; }
     a.button:focus-visible { outline: 2px solid #7aa2ff; outline-offset: 3px; }
+    video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      margin-top: 56px;
+      border-radius: 16px;
+      background: #f4f4f6;
+      box-shadow: 0 0 0 1px #ffffff1f, 0 24px 80px -24px #000;
+    }
+    @media (max-width: 700px) {
+      body { padding: 48px 20px; }
+      h1 { font-size: 24px; }
+      p { font-size: 15px; }
+      video { aspect-ratio: 4 / 5; margin-top: 40px; border-radius: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      a.button, a.button svg { transition: none; }
+      a.button:hover, a.button:hover svg { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -53,7 +91,24 @@
     <img src="assets/icon-128.png" alt="">
     <h1>Alpha tester Edunex Plus</h1>
     <p>Coba versi terbaru lebih dulu, lalu ceritakan apa yang kurang.</p>
-    <a class="button" href="https://forms.gle/Ajaj2wM6q6kHhH4R6">Daftar</a>
+    <a class="button" href="https://forms.gle/Ajaj2wM6q6kHhH4R6">
+      Daftar
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <video id="demo" autoplay muted loop playsinline controls preload="metadata" poster="assets/poster-16x9.jpg" aria-label="Video singkat Edunex Plus">
+      <source src="assets/demo-4x5.mp4" type="video/mp4" media="(max-width: 700px)">
+      <source src="assets/demo-16x9.mp4" type="video/mp4">
+    </video>
   </main>
+  <script>
+    // Phones get the 4:5 cut (picked by <source media>); give them its still too,
+    // and leave the video still for anyone who asked for less motion.
+    var demo = document.getElementById("demo");
+    if (matchMedia("(max-width: 700px)").matches) demo.poster = "assets/poster-4x5.jpg";
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      demo.removeAttribute("autoplay");
+      demo.pause();
+    }
+  </script>
 </body>
 </html>
